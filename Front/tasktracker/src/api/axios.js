@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://employee-tracker-du2a.onrender.com/api",
 });
 
 // Add token automatically
