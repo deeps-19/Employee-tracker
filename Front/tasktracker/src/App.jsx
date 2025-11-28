@@ -1,45 +1,59 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import AdminTasks from "./pages/AdminTasks";
+import AssignTask from "./pages/AssignTask";
 import ProtectedRoute from "./components/ProtectedRoute";
-import PublicRoute from "./components/PublicRoute";
+import Navbar from "./components/Navbar";
+import AdminRoute from "./components/AdminRoute";
+import CreateTask from "./pages/CreateTask";
+import AdminPanel from "./pages/AdminPanel";
 
-export default function App() {
+function App() {
   return (
     <BrowserRouter>
+      <Navbar />
+
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
-        {/* Default route → auto redirect */}
-        <Route
-          path="/"
-          element={
-            localStorage.getItem("token")
-              ? <Navigate to="/dashboard" />
-              : <Navigate to="/login" />
-          }
-        />
-
-        {/* Public pages (visible only when not logged in) */}
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-
-        {/* Protected pages (visible only when logged in) */}
         <Route
           path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
+          element={<ProtectedRoute><Dashboard /></ProtectedRoute>}
         />
+
+        <Route
+          path="/admin/tasks"
+          element={<ProtectedRoute><AdminTasks /></ProtectedRoute>}
+        />
+
+        <Route
+          path="/admin/assign"
+          element={<ProtectedRoute><AssignTask /></ProtectedRoute>}
+        />
+        <Route
+  path="/admin/create"
+  element={
+    <AdminRoute>
+      <CreateTask />
+    </AdminRoute>
+  }
+/>
+
+<Route
+  path="/admin/panel"
+  element={
+    <AdminRoute>
+      <AdminPanel />
+    </AdminRoute>
+  }
+/>
 
       </Routes>
     </BrowserRouter>
   );
 }
+
+export default App;
